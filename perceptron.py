@@ -1,6 +1,7 @@
 #!/bin/python3
 
 import random
+import math
 
 # Function return 1 for positive and -1 for negative value
 def sign(a):
@@ -9,13 +10,19 @@ def sign(a):
     elif (a <= 0):
         return -1
 
+# Function return value between 0 and 1 for x input
+def sigmoid(x):
+    out = 1/(1+math.exp(-x))
+    return (out)
+
 class Perceptron:
 
     # Constructor
-    def __init__(self,inputLen):
+    def __init__(self,inputLen,activationFunc):
         self.weights = [None] * inputLen
         self.inputs = []
         self.learnRate = 0;
+        self.activationFunc = activationFunc;
 
         # Assiging random values to weights
         for i in range(len(self.weights)):
@@ -34,18 +41,24 @@ class Perceptron:
         print("Sum = " + str(total))
 
         # Activation function
-        output = sign(total)
+        if (self.activationFunc == "sign"):
+            output = sign(total)
+        elif (self.activationFunc == "sigmoid"):
+            output = sigmoid(total)
         print("Output = " + str(output))
-        if (output == -1):
-            return 0
-        else:
-            return 1
+        return output
     
     # Training perceptron with known answer (supervised learning)
-    def train(self, inputs, target, r):
+    def train(self, inputs, target, r, classification):
         self.learnRate = r
         self.inputs = inputs
-        guessVal = self.guess(self.inputs)
+        result = self.guess(self.inputs)
+        print("result value = " + str(result))
+
+        # User classification function
+        classifyFunc = classification
+        guessVal = classifyFunc(result)
+
         print("Inputs value = " + str(inputs))
         print("Target value = " + str(target))
         print("Guess value = " + str(guessVal))
