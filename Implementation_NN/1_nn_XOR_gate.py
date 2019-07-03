@@ -1,16 +1,16 @@
 #!/bin/python3
-# XOR and XNOR cannot be linearly separated, so perceptron cannot give correct result
 
 import sys
 import random
 import numpy as np
 sys.path.append('..')
 from neural_network import NeuralNetwork
+# from neural_network_verbose import NeuralNetwork
 
 inputLen = 2
-hiddenLen = 100
+hiddenLen = 4
 outputLen = 1
-learningRate = 0.2
+learningRate = 0.1
 n = NeuralNetwork(inputLen, hiddenLen, outputLen)
 # n = NeuralNetwork(2, 2, 1)
 
@@ -21,39 +21,42 @@ training_data = {
     4: {'inputs': np.array([[1],[1]]), 'targets': np.array([[0]])},
     }
 
+print("\033[4m" + "\n### Training ###" + "\033[0m")
 # x = random.choice(list(training_data.values()))
 # print (x.get('inputs'))
 
-for i in range(1000):
+for i in range(10000):
+# for i in range(1000):
     # x = random.choice(list(training_data.keys()))
     x = random.choice(list(training_data.values()))
     inputs =  x.get('inputs')
     targets =  x.get('targets')
     # print("Input = " + str(inputs))
-    # print("Targets = " + str(targets))
+    # print("Targets = " + str(targets) + "\n")
     n.trainSVLearing(inputs,targets,learningRate)
 
 
+print("\033[4m" + "\n### Testing Phase ###" + "\033[0m")
 inputs = np.array([
     [0],
     [0]
     ])
-n.feedForward(inputs)
+print(n.feedForward(inputs))
 
 inputs = np.array([
     [0],
     [1]
     ])
-n.feedForward(inputs)
+print(n.feedForward(inputs))
 
 inputs = np.array([
     [1],
     [0]
     ])
-n.feedForward(inputs)
+print(n.feedForward(inputs))
 
 inputs = np.array([
     [1],
     [1]
     ])
-n.feedForward(inputs)
+print(n.feedForward(inputs))
