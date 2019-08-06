@@ -9,7 +9,7 @@ from neural_network import NeuralNetwork
 pygame.init()
 
 highScore = 0
-population = 150
+population = 130
 # population = 180
 generation = 1
 class Dino():
@@ -23,8 +23,9 @@ class Dino():
         self.isJump = False
         self.jumpCount = 15
         # self.brain = NeuralNetwork(5,100,3)
-        self.brain = NeuralNetwork(5,50,3)
+        # self.brain = NeuralNetwork(5,50,3)
         # self.brain = NeuralNetwork(5,20,3)
+        self.brain = NeuralNetwork(6,80,3)
         self.color = (random.randint(0,255),random.randint(0,255),random.randint(0,255))
 
     def draw(self, win):
@@ -49,7 +50,11 @@ class Dino():
             aiSeeWidth = obstacles[0].width
             aiSeeHeight = obstacles[0].height
             aiSeeSpeed = speed
-            inputs = np.array([[aiSeeX],[aiSeeY], [aiSeeWidth], [aiSeeHeight], [aiSeeSpeed]])
+            if self.isJump == True:
+                aiSeeJump = 1
+            else:
+                aiSeeJump = 0
+            inputs = np.array([[aiSeeX],[aiSeeY], [aiSeeWidth], [aiSeeHeight], [aiSeeSpeed], [aiSeeJump]])
             output = self.brain.feedForward(inputs)
             # print(output)
             maxVal = output.max()
@@ -143,10 +148,10 @@ def redrawGameWindow():
                     c = Obstacle(screenWidth,270,30,30)
                 # Bird medium
                 elif (tmp == 14):
-                    c = Obstacle(screenWidth,320,30,30)
+                    c = Obstacle(screenWidth,80,30,260)
                 # Bird low
                 else:
-                    c = Obstacle(screenWidth,350,30,30)
+                    c = Obstacle(screenWidth,110,30,260)
                 gen = 0
                 obstacles.append(c)
 
@@ -240,7 +245,7 @@ def nextGen():
         child.brain.weightsOut = tmp.brain.weightsOut
         child.brain.biasHid = tmp.brain.biasHid
         child.brain.biasOut = tmp.brain.biasOut
-        child.brain.mutate(0.01)
+        child.brain.mutate(0.03)
         dinosours.append(child)
     # print(len(dinosours))
     # print(dinosours)
