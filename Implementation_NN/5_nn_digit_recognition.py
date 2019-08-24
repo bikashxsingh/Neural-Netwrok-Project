@@ -14,7 +14,6 @@ import PIL
 sys.path.append('..')
 from neural_network import NeuralNetwork
 
-
 learningRate = 0.1
 # nn = NeuralNetwork(64, 100, 10)
 nn = NeuralNetwork(64, 150, 10)
@@ -58,7 +57,6 @@ def training():
     # for i in range (10):
     for i in range (10):
         # (total no of data = 1797)
-        # for i in range(len(digits.data)):
         for i in range(1437):
             imgTrain = digits.images[i]
             target = digits.target[i]
@@ -188,25 +186,16 @@ def drawingCanvas():
     cv.pack(padx=10, pady=10)
     cv.pack()
 
-    # PIL create an empty image and draw object to draw on
-    # memory only, not visible
+    # PIL create an empty image and draw object to draw on memory only, not visible
     image1 = PIL.Image.new("RGB", (width, height), white)
     draw = ImageDraw.Draw(image1)
 
-    # do the Tkinter canvas drawings (visible)
+    # Tkinter canvas drawings (visible)
     # cv.create_line([0, center, width, center], fill='green')
-
     cv.pack(expand=YES, fill=BOTH)
     cv.bind("<B1-Motion>", paint)
-
-    # do the PIL image/draw (in memory) drawings
-    # draw.line([0, center, width, center], green)
-
-    # PIL image can be saved as .png .jpg .gif or .bmp file (among others)
-    # filename = "my_drawing.png"
-    # image1.save(filename)
-    buttonPredict=Button(text="save",command=save)
-    buttonClear=Button(text="clear",command=clear)
+    buttonPredict=Button(root,text="save",command=save)
+    buttonClear=Button(root,text="clear",command=clear)
     buttonPredict.pack()
     buttonClear.pack()
     root.mainloop()
@@ -215,4 +204,5 @@ def drawingCanvas():
 # nn.nnVisualization()
 training()
 testing()
+nn.tk.destroy()
 drawingCanvas()

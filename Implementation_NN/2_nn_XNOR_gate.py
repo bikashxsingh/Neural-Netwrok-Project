@@ -5,10 +5,9 @@ import random
 import numpy as np
 sys.path.append('..')
 from neural_network import NeuralNetwork
-# from neural_network_verbose import NeuralNetwork
 
 inputLen = 2
-hiddenLen = 4
+hiddenLen = 8
 outputLen = 1
 learningRate = 0.1
 n = NeuralNetwork(inputLen, hiddenLen, outputLen)
@@ -22,9 +21,6 @@ training_data = {
     }
 
 print("\033[4m" + "\n### Training ###" + "\033[0m")
-# x = random.choice(list(training_data.values()))
-# print (x.get('inputs'))
-
 for i in range(10000):
     x = random.choice(list(training_data.values()))
     inputs =  x.get('inputs')
@@ -56,4 +52,5 @@ inputs = np.array([
     [1]
     ])
 print(n.feedForward(inputs))
-n.nnVisualization()
+tkVis = n.nnStructure()
+tkVis.mainloop()
